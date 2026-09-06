@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 :root {
@@ -382,11 +383,12 @@ h1, .brand {
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    gap: 48px;
+    gap: clamp(20px, 4vw, 48px);
 }
  
 .content-col {
-    width: 560px;
+    width: 100%;
+    max-width: 560px;
     display: flex;
     flex-direction: column;
     gap: 48px;
@@ -405,15 +407,18 @@ h1, .brand {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 24px;
-    gap: 20px;
+    
+    padding: clamp(16px, 2.5vw, 24px);
+    gap: clamp(12px, 2vw, 20px);
+
     background: var(--accent);
     border-radius: 24px;
 
-    transition: transform 0.4s ease;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .exp-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     transform: translateY(-20px);
 }
  
@@ -448,8 +453,8 @@ h1, .brand {
  
 .exp-icon {
     flex: none;
-    width: 80px;
-    height: 80px;
+    width: clamp(56px, 10vw, 80px);
+    height: clamp(56px, 10vw, 80px);
     border-radius: 8px;
     object-fit: cover;
     background: var(--primary);
@@ -484,7 +489,7 @@ h1, .brand {
  
 .title-content h4 {
     font-weight: 500;
-    font-size: 24px;
+    font-size: clamp(18px, 2.5vw, 24px);
     line-height: 29px;
     color: var(--secondary);
 }
@@ -494,7 +499,7 @@ h1, .brand {
     font-size: 12px;
     line-height: 15px;
     color: var(--secondary);
-    white-space: nowrap;
+    white-space: normal;
     padding-top: 6px;
 }
  
@@ -609,6 +614,66 @@ h1, .brand {
     .skill-popup {
         width: 0;
         content: "";
+    }
+
+    .experience {
+        padding-block: 40px;
+    }
+
+    .experience .content {
+        gap: 32px;
+    }
+
+    .wrapper {
+        gap: 20px;
+    }
+
+    .content-col {
+        max-width: none;
+    }
+
+    .time-line {
+        width: 20px;
+    }
+
+    .exp-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .title-card {
+        gap: 12px;
+    }
+
+    .title-card h3 {
+        font-size: clamp(24px, 7vw, 32px);
+    }
+
+    .exp-icon {
+        width: 56px;
+        height: 56px;
+    }
+
+    .content-card {
+        padding: 10px;
+    }
+
+    .title-content {
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .title-content h4 {
+        font-size: 18px;
+    }
+
+    .title-content > span {
+        white-space: normal;
+    }
+
+    .content-card > span {
+        font-size: 14px;
+        line-height: 1.5;
     }
 }
 
