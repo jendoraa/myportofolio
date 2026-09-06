@@ -32,8 +32,11 @@ h1, .brand {
     max-width: var(--container-width);
     margin: 0 auto;
     padding-inline: clamp(24px, 4vw, 96px);
+    display: flex;
+    justify-content: center;
 }
 
+/* navbar */
 .site-header {
     border-bottom: 2px solid var(--accent);
     height: 80px;
@@ -68,12 +71,13 @@ h1, .brand {
     line-height: 24px;
 }
 
+/* hero section */
 .hero {
     padding-top: 64px;
 }
 
 .hero-content {
-    min-height: 599px;
+    min-height: 600px;
     display: flex;
     justify-content: space-between;
     gap: 24px;
@@ -146,6 +150,7 @@ h1, .brand {
     transform: translateX(16px);
 }   
 
+/* hero - profil */
 .hero-photo {
     position: relative;
     width: clamp(480px, 40vw, 520px);
@@ -201,9 +206,145 @@ h1, .brand {
     
 }
 
+/* skill section */
 .skills {
-    min-height: 400px;
-    background-color: orange;
+    display: flex;
+    justify-content: center;
+    max-height: 300px;
+    padding-block: 48px;
+}
+
+.skills-content {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    padding: 24px 48px; 
+    gap: 48px;
+
+    height: 200px;
+
+    background: var(--primary);
+    border-radius: 24px;
+}
+
+.skill-card {
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 26px 30px;
+    width: 160px;
+    height: 152px;
+
+    background: var(--secondary);
+    border-radius: 12px;
+
+    cursor: pointer;
+}
+
+.skill {
+    width: 100px;
+    height: 100px;
+    transition: transform 0.25s ease;
+}
+
+.skill-card span {
+    display: flex;
+    font-size: 0;
+    justify-content: center;
+    color: var(--accent);
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.25 ease;
+}
+
+.skill-card:hover .skill {
+    transform: scale(0.7) translateY(-15px);
+}
+
+.skill-card:hover span {
+    opacity: 1;
+    font-size: 20px;
+    transform: translateY(-28px);
+}
+
+/* skill - popup */
+.skill-popup {
+    position: absolute;
+    top: 50%;
+    width: 240px;
+    background-color: var(--background);
+    color: var(--secondary);
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    z-index: 10;
+}
+
+.skill-popup::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: var(--background);
+}
+
+.skill-popup h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 6px;
+}
+
+.skill-popup ul {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--secondary);
+}
+
+/* skill - popup - kanan */
+.popup-right {
+    left: calc(100% + 14px);
+    transform: translateY(-50%) translateX(-8px);
+}
+
+.popup-right::before {
+    left: -6px;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.skill-card:hover .popup-right {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
+}
+
+/* skill - popup - kiri */
+.popup-left {
+    right: calc(100% + 14px);
+    transform: translateY(-50%) translateX(8px);
+}
+
+.popup-left::before {
+    right: -6px;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.skill-card:hover .popup-left {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
 }
 
 .experience {
@@ -315,5 +456,5 @@ h1, .brand {
 
     .bio {
         width: 100%;
-    } */
-}
+    }
+} */
