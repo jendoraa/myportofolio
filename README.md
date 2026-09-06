@@ -5,4 +5,4 @@
 - Kelas : PBP C
 
 ### Bantuan AI
-Hero, Skill section : https://chatgpt.com/share/6a9b9861-0128-83ec-918f-ff826a59564c
+Hero, Skill, Experience section : https://chatgpt.com/share/6a9b9861-0128-83ec-918f-ff826a59564c
