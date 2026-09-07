@@ -400,7 +400,7 @@ h1, .brand {
     display: flex;
     flex-direction: column;
     gap: 48px;
-    padding-bottom: 48px;
+    padding-block: 48px;
 }
  
 .time-line {
