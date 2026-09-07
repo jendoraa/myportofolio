@@ -25,7 +25,7 @@ body {
 }
 
 #exp {
-    scroll-margin-top: 60px;
+    scroll-margin-top: 120px;
 }
 
 a {
@@ -336,7 +336,7 @@ h1, .brand {
 
 .skill-detail h4 {
     margin: 0 0 6px 0;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 700;
     color: var(--secondary);
     border-bottom: 1px solid var(--secondary);
@@ -345,7 +345,7 @@ h1, .brand {
 .skill-detail ul {
     margin: 0;
     padding-left: 18px;
-    font-size: 12px;
+    font-size: 16px;
     line-height: 1.6;
     color: var(--secondary);
 }
