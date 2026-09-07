@@ -58,10 +58,11 @@ AI digunakan pada beberapa tahap pengerjaan website, antara lain:
 ### a. CSS dan Layout
 ChatGPT digunakan untuk membantu memahami dan mengevaluasi penggunaan CSS, terutama terkait:
 - positioning,
-- hover effect, 
+- hover effect,
+- expanding pill (menggantikan *hover popup* statis), 
 - responsive layout.
 
-AI juga digunakan ketika terdapat perbedaan hasil tampilan antar-section meskipun menggunakan nilai CSS yang terlihat serupa. Diskusi dengan AI membantu mengidentifikasi pengaruh struktur parent element, ukuran konten, padding, dan batas lebar terhadap hasil akhir layout.
+AI juga digunakan ketika terdapat perbedaan hasil tampilan antar-section meskipun menggunakan nilai CSS yang terlihat serupa. Diskusi dengan AI membantu mengidentifikasi pengaruh struktur parent element, ukuran konten, padding, dan batas lebar terhadap hasil akhir layout saat kartu melebar (*expand*).
 
 ### b. Responsive Design
 AI digunakan sebagai bahan diskusi ketika menyesuaikan website agar dapat digunakan pada berbagai ukuran layar. Beberapa hal yang dibahas meliputi:
@@ -75,7 +76,13 @@ AI digunakan sebagai bahan diskusi ketika menyesuaikan website agar dapat diguna
 
 AI membantu memberikan alternatif pendekatan, tetapi perubahan akhir pada CSS dilakukan dan disesuaikan berdasarkan hasil pengujian tampilan website.
 
-### c. Debugging dan Pemecahan Masalah
+### c. Interaktivitas JavaScript
+AI digunakan untuk menyusun logika interaksi sederhana pada DOM:
+- mengimplementasikan *event listener* `click` pada kartu skill,
+- membuat logika *toggle* status aktif (`classList.toggle('active')`),
+- memastikan interaksi bersifat eksklusif, di mana kartu lain otomatis menutup ketika salah satu kartu skill diklik.
+
+### d. Debugging dan Pemecahan Masalah
 ChatGPT digunakan untuk membantu menganalisis masalah pada kode HTML dan CSS. Kode yang bermasalah diberikan sebagai konteks untuk kemudian dianalisis penyebabnya. Contoh masalah yang dibahas antara lain:
 - posisi elemen yang berubah ketika diberikan padding,
 - ukuran container yang tidak sesuai dengan ekspektasi,
