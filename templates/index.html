@@ -93,15 +93,16 @@
                 <div class="skills-content">
 
                     <div class="skill-card">
-                        <img
-                            class="skill"
-                            src="/static/img/webdev.svg"
-                            alt="Website"
-                        >
-                        <span>Web</span>
+                        <div class="skill-icon-wrapper">
+                            <img
+                                class="skill"
+                                src="/static/img/webdev.svg"
+                                alt="Website"
+                            >
+                            <span>Web</span>
+                        </div>
 
-                        <div class="skill-popup popup-right">
-
+                        <div class="skill-detail">
                             <h4>Web Development</h4>
                             <ul>
                                 <li>HTML, CSS, JavaScript</li>
@@ -112,31 +113,35 @@
                     </div>
 
                     <div class="skill-card">
-                        <img
-                            class="skill"
-                            src="/static/img/hardware.svg"
-                            alt="Hardware"
-                        >
-                        <span>Hachiware</span>
+                        <div class="skill-icon-wrapper">
+                            <img
+                                class="skill"
+                                src="/static/img/hardware.svg"
+                                alt="Hardware"
+                            >
+                            <span>Hachiware</span>
+                        </div>
 
-                        <div class="skill-popup popup-right">
+                        <div class="skill-detail">
                             <h4>Hardware</h4>
                             <ul>
-                                <li>Arduino</li>
+                                <li>Arduino UNO, ESP32</li>
                                 <li>Raspberry Pi</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="skill-card">
-                        <img
-                            class="skill"
-                            src="/static/img/ml.svg"
-                            alt="Artificial Intelligence"
-                        >
-                        <span>AI</span>
+                        <div class="skill-icon-wrapper">
+                            <img
+                                class="skill"
+                                src="/static/img/ml.svg"
+                                alt="Artificial Intelligence"
+                            >
+                            <span>AI</span>
+                        </div>
 
-                        <div class="skill-popup popup-left">
+                        <div class="skill-detail">
                             <h4>Artificial Intelligence</h4>
                             <ul>
                                 <li>YOLO</li>
@@ -146,14 +151,16 @@
                     </div>
 
                     <div class="skill-card">
-                        <img
-                            class="skill"
-                            src="/static/img/latex.svg"
-                            alt="Latex"
-                        >
-                        <span>LaTeX</span>
+                        <div class="skill-icon-wrapper">
+                            <img
+                                class="skill"
+                                src="/static/img/latex.svg"
+                                alt="Latex"
+                            >
+                            <span>LaTeX</span>
+                        </div>
 
-                        <div class="skill-popup popup-left">
+                        <div class="skill-detail">
                             <h4>LaTeX</h4>
                             <ul>
                                 Aku bisa ngeLatex sendiri^^
@@ -342,5 +349,18 @@
             <p>&copy; 2026 Rajendra. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
         </div>
     </footer>
+
+    <script>
+      const cards = document.querySelectorAll('.skill-card');
+
+      cards.forEach((card) => {
+        card.addEventListener('click', () => {
+          cards.forEach((c) => {
+            if (c !== card) c.classList.remove('active');
+          });
+          card.classList.toggle('active');
+        });
+      });
+    </script>
 </body>
 </html>
