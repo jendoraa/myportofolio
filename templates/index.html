@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rajendra - Portfolio</title>
+    <title>{{ name }} - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -13,10 +13,10 @@
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="#profile" class="brand">Rajendra</a>
+            <a href="{% url 'main:show_main' %}" class="brand">{{ name }}</a>
             <nav class="nav">
-                <a href="#profile">Profile</a>
-                <a href="#exp">Experience</a>
+                <a href="{% url 'main:show_main' %}">Profile</a>
+                <a href="{% url 'main:show_experience' %}">Experience</a>
             </nav>
         </div>
     </header>
@@ -29,21 +29,18 @@
 
                     <div class="hero-intro">
                         <h1>
-                            Rajendra Akbar<br/>
-                            Mahdiansyah
+                            {{ name }}
                         </h1>
 
                         <div class="hero-meta">
-                            <span>NPM 2506596874</span>
+                            <span>NPM {{ npm }}</span>
                             <span>-</span>
-                            <span>S1 Ilmu Komputer</span>
+                            <span>{{ study_program }}</span>
                         </div>
                     </div>
 
                     <p class="bio">
-                        Hai, saya membuat portofolio ini. <br/>
-                        Ini portofolio yang saya buat sendiri. <br/>
-                        Portofolio ini dibuat oleh saya sendiri.
+                        {{ bio }}
                     </p>
 
                     <div class="cta">
@@ -75,13 +72,13 @@
                     <img
                         class="avatar avatar-1"
                         src="/static/img/rajen-1.jpg"
-                        alt="Profile photo"
+                        alt="Profile photo of {{ name }}"
                     >
 
                     <img
                         class="avatar avatar-2"
                         src="/static/img/rajen-2.jpg"
-                        alt="Profile photo"
+                        alt="Profile photo of {{ name }}"
                     >
                 </div>
 
