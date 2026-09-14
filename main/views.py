@@ -6,7 +6,7 @@ def show_projects(request):
     context = {
         "projects": projects,
     }
-    return render(request, "project_list.html", context)
+    return render(request, "project.html", context)
 
 def show_main(request):
     context = {
