@@ -1,6 +1,12 @@
 from django.shortcuts import render
-from main.models import Experience
+from main.models import Experience, Project
 
+def show_projects(request):
+    projects = Project.objects.all()
+    context = {
+        "projects": projects,
+    }
+    return render(request, "project_list.html", context)
 
 def show_main(request):
     context = {
