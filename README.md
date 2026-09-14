@@ -46,6 +46,21 @@ Karena website yang saya buat masih berupa static web, informasi di dalamnya mas
 
 Berdasarkan keterbatasan tersebut, saya melihat beberapa fungsionalitas yang dapat ditambahkan jika website dikembangkan menjadi dynamic web, seperti database untuk menyimpan experience dan skills. Dengan demikian, website tidak hanya berfungsi sebagai halaman informasi statis, tetapi juga dapat menjadi platform portofolio yang lebih interaktif dan mudah dikelola.
 
+
+## Tugas 2
+### 1. Alur Saat Membuka Halaman Portofolio Baru
+Browser mengirim request HTTP GET ke URL tertentu (misal /projects/). urls.py projek menerima request tersebut dan meneruskannya ke urls.py aplikasi main. urls.py aplikasi mencocokkan path dengan fungsi view show_projects. View berinteraksi dengan Model Project untuk mengambil data dari database via Project.objects.all(). View memasukkan data tersebut ke dalam dictionary context lalu memanggil Template project_list.html. Template me-render data dinamis menjadi kode HTML utuh, lalu view mengembalikannya sebagai HTTP response ke browser pengguna.
+
+### 2. Pentingnya Menyimpan Data di Model
+Menambah atau memperbarui proyek cukup dilakukan melalui database tanpa perlu mengubah kode file HTML atau melakukan deploy ulang setiap ada revisi konten. Selain itu, data di model mempermudah operasi dinamis seperti penyaringan (filter), pengurutan, atau pembuatan API/fitur pencarian di kemudian hari.
+
+### 3. Perbedaan makemigrations dan migrate
+makemigrations berfungsi membaca definisi model pada models.py dan mencatat rencana perubahannya ke dalam bentuk berkas migrasi baru di folder migrations/. Perintah ini belum mengubah skema database.
+
+Sedangkan migrate berfungsi mengeksekusi berkas-berkas migrasi yang belum dijalankan ke dalam basis data dan mengubah skema tabel secara langsung.
+
+Contoh perubahan: Menambahkan atribut/field baru, misalnya tech_stack = models.CharField(max_length=255), pada model Project. Kamu harus menjalankan python manage.py makemigrations untuk membuat instruksi pembuatan kolom baru, lalu menjalankan python manage.py migrate agar kolom tersebut benar-benar dibuat pada tabel database.
+
 # Pengungkapan Penggunaan AI
 Dalam pengerjaan website portofolio ini, saya menggunakan ChatGPT (OpenAI) sebagai alat bantu dalam proses pembelajaran, perancangan, implementasi, dan evaluasi website. Penggunaan AI dilakukan sebagai pendukung proses pengerjaan, sedangkan keputusan akhir mengenai desain, struktur, kode, dan implementasi website tetap dilakukan dan diverifikasi oleh saya sendiri.
 
