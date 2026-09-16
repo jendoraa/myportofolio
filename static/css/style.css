@@ -594,6 +594,106 @@ h1, .brand {
     font-size: 0.85rem;
     font-weight: 600;
 }
+.page-container {
+    display: flex;
+    justify-content: center;
+    gap: 4rem; /* jarak antara judul dan form */
+    padding: 3rem 2rem;
+}
+
+/* Menetralkan container utama */
+.page-container {
+    display: flex;
+    justify-content: center; /* membuat konten ke tengah layar */
+    align-items: flex-start;
+    padding: 3rem 1rem;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.form-card {
+    width: 100%;
+    max-width: 560px; /* membatasi lebar form agar tidak melar */
+}
+
+.page-title {
+    color: var(--accent, #0e5b7a);
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
+
+/* Penyesuaian form actions */
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.page-title {
+    flex: 0 0 280px; /* lebar tetap untuk judul di kiri */
+    color: var(--accent, #0e5b7a);
+    font-size: 2.25rem;
+}
+
+.project-form {
+    flex: 1;
+    max-width: 500px;
+    margin-top: 0;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.7rem;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    font: inherit;
+    transition:
+        border-color 0.2s ease,
+        outline-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: 2px solid var(--accent);
+    border-color: var(--accent);
+}
+
+.form-error {
+    color: #b42318;
+    font-size: 0.85rem;
+    margin-top: 0.35rem;
+}
+
+.button {
+    display: inline-block;
+    height: fit-content;
+    border: 0;
+    border-radius: var(--radius);
+    padding: 0.65rem 1rem;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.button-secondary {
+    background: var(--ink);
+}
 
 @media (max-width: 700px) {
     /* navbar */
