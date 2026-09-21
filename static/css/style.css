@@ -41,8 +41,6 @@ h1, .brand {
     max-width: var(--container-width);
     margin: 0 auto;
     padding-inline: clamp(24px, 4vw, 96px);
-    display: flex;
-    justify-content: center;
     gap: 48px;
 }
 
@@ -594,12 +592,6 @@ h1, .brand {
     font-size: 0.85rem;
     font-weight: 600;
 }
-.page-container {
-    display: flex;
-    justify-content: center;
-    gap: 4rem; /* jarak antara judul dan form */
-    padding: 3rem 2rem;
-}
 
 /* Menetralkan container utama */
 .page-container {
@@ -611,35 +603,16 @@ h1, .brand {
     box-sizing: border-box;
 }
 
-.form-card {
-    width: 100%;
-    max-width: 560px; /* membatasi lebar form agar tidak melar */
-}
-
-.page-title {
-    color: var(--accent, #0e5b7a);
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 1.5rem;
-}
-
-/* Penyesuaian form actions */
-.form-actions {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-}
-
-.page-title {
-    flex: 0 0 280px; /* lebar tetap untuk judul di kiri */
-    color: var(--accent, #0e5b7a);
-    font-size: 2.25rem;
+/* .project html */
+.project-section {
+    padding: 4rem 0;
+    border-top: 2px solid var(--line);
 }
 
 .project-form {
-    flex: 1;
-    max-width: 500px;
-    margin-top: 0;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 1.5rem;
 }
 
 .form-group {

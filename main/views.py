@@ -3,7 +3,82 @@ from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from main.models import Experience, Project
-from main.forms import ProjectForm
+from main.forms import ProjectForm, ExperienceForm
+
+def create_experience(request):
+    if request.method == "POST":
+        form = ExperienceForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('experience')
+
+    else:
+        form = ExperienceForm()
+
+    return render(request, 'create_experience.html', {
+        'form': form
+    })
+
+def update_experience(request, id):
+    experience = get_object_or_404(Experience, id=id)
+
+    if request.method == "POST":
+        form = ExperienceForm(request.POST, instance=experience)
+
+        if form.is_valid():
+            form.save()
+            return redirect('experience')
+
+    else:
+        form = ExperienceForm(instance=experience)
+
+    return render(request, 'update_experience.html', {
+        'form': form,
+        'experience': experience
+    })
+
+def delete_experience(request, id):
+    experience = get_object_or_404(Experience, id=id)
+    experience.delete()
+
+    return redirect('experience')
+
+def get_experiences_json(request):
+    title_query = request.GET.get("title", "").strip()
+    experiences = Experience.objects.all()
+
+    if title_query:
+        experiences = experiences.filter(title__icontains=title_query)
+
+    experiences_json = serializers.serialize("json", experiences)
+    return HttpResponse(
+        experiences_json,
+        content_type="application/json"
+    )
+
+def experience(request):
+    experiences = Experience.objects.all()
+
+    experiences_json = serializers.serialize(
+        "json",
+        experiences
+    )
+
+    experience_list = list(
+        serializers.deserialize(
+            "json",
+            experiences_json
+        )
+    )
+
+    return render(
+        request,
+        "experience.html",
+        {
+            "experience_list": experience_list
+        }
+    )
 
 def get_projects_json(request):
     title_query = request.GET.get("title", "").strip()
@@ -40,7 +115,7 @@ def show_projects(request):
     title_query = request.GET.get("title", "").strip()
 
     context = {
-        "name": "Burhan",
+        "name": "Rajen",
         "project_list": projects,
         "title_query": title_query,
     }
