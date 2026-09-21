@@ -29,7 +29,8 @@
             data.forEach(item => {
                 container.innerHTML += `
                     <div class="experience-card">
-                        <h2>${item.fields.organization}</h2>
+                        ${item.fields.thumbnail ? `<img src="${item.fields.thumbnail}" alt="${item.fields.title}" />` : ''}
+                        <h1>${item.fields.title}</h1>
                         <h3>${item.fields.position}</h3>
 
                         <p>

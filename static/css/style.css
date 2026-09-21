@@ -668,6 +668,129 @@ h1, .brand {
     background: var(--ink);
 }
 
+.experience {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+    .experience-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 28px;
+        padding-bottom: 14px;
+        border-bottom: 2px solid #e5e7eb;
+    }
+
+    .experience-header h1 {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #0f766e;
+    }
+
+    .experience-header a {
+        display: inline-block;
+        background-color: #0d9488;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 8px 18px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: background-color 0.2s ease;
+    }
+
+    .experience-header a:hover {
+        background-color: #0f766e;
+    }
+
+    #experience-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .experience-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-left: 5px solid #0d9488;
+        border-radius: 8px;
+        padding: 20px 24px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .experience-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 6px;
+    }
+
+    .experience-card h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .experience-card h3 {
+        margin: 0 0 10px 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #0d9488;
+    }
+
+    .experience-card .year {
+        margin: 0;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #6b7280;
+    }
+
+    .experience-card .desc {
+        margin: 0 0 16px 0;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: #374151;
+    }
+
+    .card-actions {
+        display: flex;
+        gap: 14px;
+        padding-top: 12px;
+        border-top: 1px solid #f3f4f6;
+    }
+
+    .card-actions a {
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .action-edit {
+        color: #2563eb;
+    }
+
+    .action-edit:hover {
+        text-decoration: underline;
+    }
+
+    .action-delete {
+        color: #dc2626;
+    }
+
+    .action-delete:hover {
+        text-decoration: underline;
+    }
+
 @media (max-width: 700px) {
     /* navbar */
     .site-header {
