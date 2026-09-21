@@ -61,6 +61,23 @@ Sedangkan migrate berfungsi mengeksekusi berkas-berkas migrasi yang belum dijala
 
 Contoh perubahan: Menambahkan atribut/field baru, misalnya tech_stack = models.CharField(max_length=255), pada model Project. Kamu harus menjalankan python manage.py makemigrations untuk membuat instruksi pembuatan kolom baru, lalu menjalankan python manage.py migrate agar kolom tersebut benar-benar dibuat pada tabel database.
 
+## Tugas 3
+### 1. Mengapa menggunakan ModelForm dan mengapa perlu {% csrf_token %}?
+`ModelForm` digunakan karena dapat membuat form berdasarkan struktur Model yang sudah didefinisikan di Django. Dengan `ModelForm`, field pada form dapat disesuaikan secara otomatis dengan field yang terdapat pada model sehingga kode yang perlu ditulis menjadi lebih sedikit dan lebih mudah dikelola. Selain itu, `ModelForm` juga membantu melakukan validasi data sebelum data tersebut disimpan ke database. Jika membuat form HTML secara manual, developer harus menentukan sendiri setiap field dan melakukan proses validasi serta penyimpanan datanya.
+
+`{% csrf_token %}` wajib ditambahkan pada form yang menggunakan metode POST karena berfungsi sebagai perlindungan terhadap serangan Cross-Site Request Forgery (CSRF). Token tersebut digunakan Django untuk memastikan bahwa request POST benar-benar berasal dari halaman website yang sah. Tanpa token CSRF yang valid, Django biasanya akan menolak request tersebut dengan respons 403 Forbidden.
+
+### 2. Mengapa JSON lebih banyak digunakan dibandingkan XML dalam pengembangan aplikasi web modern?
+JSON lebih banyak digunakan karena memiliki struktur yang sederhana, ringkas, dan mudah dibaca baik oleh manusia maupun program. JSON juga memiliki format yang sangat dekat dengan struktur data pada JavaScript, sehingga mudah digunakan dalam komunikasi antara frontend dan backend.
+
+Dibandingkan XML, JSON umumnya membutuhkan lebih sedikit karakter untuk merepresentasikan data karena tidak memerlukan tag pembuka dan penutup untuk setiap elemen. Hal tersebut membuat ukuran data yang dikirim melalui jaringan dapat menjadi lebih kecil. JSON juga banyak didukung oleh berbagai bahasa pemrograman dan framework modern sehingga sering digunakan dalam REST API dan komunikasi antara aplikasi frontend dengan backend.
+
+### 3. Bagaimana alur view mengembalikan data portofolio dalam bentuk JSON dan mengapa perlu serialization?
+
+Ketika pengguna mengakses URL yang mengarah ke suatu fungsi view, Django menerima request tersebut dan menjalankan view yang sesuai. View kemudian mengambil data portofolio dari database menggunakan model Django, misalnya dengan Model.objects.all(). Data yang diperoleh masih berupa objek atau QuerySet Django sehingga belum dapat langsung dikembalikan dalam format JSON.
+
+Oleh karena itu, dilakukan proses serialization, yaitu mengubah data dari model Django menjadi struktur data yang dapat direpresentasikan dalam format JSON. Setelah proses serialization selesai, hasilnya dapat diubah menjadi string JSON menggunakan json.dumps(). String JSON tersebut kemudian dikembalikan kepada client menggunakan HttpResponse dengan menentukan content_type="application/json".
+
 # Pengungkapan Penggunaan AI
 Dalam pengerjaan website portofolio ini, saya menggunakan ChatGPT (OpenAI) sebagai alat bantu dalam proses pembelajaran, perancangan, implementasi, dan evaluasi website. Penggunaan AI dilakukan sebagai pendukung proses pengerjaan, sedangkan keputusan akhir mengenai desain, struktur, kode, dan implementasi website tetap dilakukan dan diverifikasi oleh saya sendiri.
 
@@ -107,6 +124,12 @@ ChatGPT digunakan untuk membantu menganalisis masalah pada kode HTML dan CSS. Ko
 - penyesuaian border pada gambar,
 - serta permasalahan layout pada responsive design.
 
+### e. Membantu membuat dan memperbaiki views, models, forms serta template HTMLS
+AI digunakan untuk membantu memahami hubungan antara komponen Django dalam pengembangan website. Pada bagian models, AI membantu dalam menentukan struktur data yang diperlukan untuk menyimpan informasi seperti nama pengalaman, deskripsi, posisi, dan gambar. Pada bagian views, AI membantu membuat logika untuk mengambil data dari database serta menampilkan, menambahkan, mengubah, dan menghapus data. AI juga membantu dalam pembuatan dan perbaikan forms untuk menerima input dari pengguna. Selain itu, AI digunakan untuk membantu memperbaiki template HTML agar dapat menampilkan data dari database secara dinamis menggunakan Django Template Language.
+
+### f. Membantu dalam implementasi fitur CRUD Experience.
+AI digunakan sebagai bantuan dalam mengimplementasikan fitur CRUD (Create, Read, Update, Delete) pada halaman Experience. Pada tahap Create, AI membantu membuat mekanisme untuk menambahkan data pengalaman baru ke database, termasuk data gambar. Pada tahap Read, AI membantu menampilkan data Experience yang tersimpan di database ke halaman website secara dinamis. Pada tahap Update, AI membantu membuat fungsi untuk mengubah data Experience yang sudah tersimpan. Sedangkan pada tahap Delete, AI membantu membuat mekanisme untuk menghapus data Experience dari database. AI juga digunakan untuk membantu melakukan debugging ketika terdapat kendala dalam proses CRUD, seperti data yang tidak tampil atau gambar yang tidak berhasil tersimpan.
+
 AI memberikan kemungkinan penyebab dan solusi, kemudian solusi tersebut diuji kembali pada website.
 
 ## 3. Modifikasi terhadap Output AI
@@ -134,4 +157,5 @@ AI juga tidak digunakan sebagai pengganti proses memahami kode. Setiap kode atau
 
 ## 6. Referensi Percakapan AI
 Percakapan dengan ChatGPT yang digunakan sebagai salah satu referensi dalam proses pengerjaan dapat dilihat melalui: 
-`https://chatgpt.com/share/6a9b9861-0128-83ec-918f-ff826a59564c`
+`https://chatgpt.com/share/6a9b9861-0128-83ec-918f-ff826a59564c`(2-7 September 2026)
+`https://chatgpt.com/share/6ab1214d-a604-83ec-b46d-579898215cdc`(16-21 September 2026)
