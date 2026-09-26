@@ -12,6 +12,9 @@ from django.core.exceptions import PermissionDenied
 
 @login_required(login_url="/login/")
 def create_experience(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    
     if request.method == "POST":
         form = ExperienceForm(request.POST)
 
@@ -28,6 +31,10 @@ def create_experience(request):
 
 @login_required(login_url="/login/")
 def update_experience(request, id):
+    is_editor = request.user.groups.filter(name='Editor').exists()
+    if not (request.user.is_superuser or is_editor):
+        raise PermissionDenied
+    
     experience = get_object_or_404(Experience, id=id)
 
     if request.method == "POST":
@@ -47,6 +54,8 @@ def update_experience(request, id):
 
 @login_required(login_url="/login/")
 def delete_experience(request, id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     experience = get_object_or_404(Experience, id=id)
     experience.delete()
     messages.success(request, "Experience berhasil dihapus!")
@@ -126,15 +135,46 @@ def show_projects(request):
     projects = [project.object for project in projects]
     title_query = request.GET.get("title", "").strip()
 
+    is_editor = (
+        request.user.is_authenticated 
+        and request.user.groups.filter(name='Editor').exists()
+    )
+
     context = {
         "name": "Rajendra Akbar",
         "project_list": projects,
         "title_query": title_query,
+        "is_editor": is_editor,
     }
     return render(request, "project.html", context)
 
 @login_required(login_url="/login/")
+def update_project(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    
+    is_editor = request.user.groups.filter(name='Editor').exists()
+    if not (request.user.is_superuser or is_editor):
+        raise PermissionDenied
+
+    form = ProjectForm(request.POST or None, instance=project)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Proyek berhasil diperbarui!")
+        return redirect("main:show_projects")
+
+    context = {
+        "name": "Rajendra",
+        "form": form,
+        "project": project,
+    }
+    return render(request, "update_project.html", context)
+
+@login_required(login_url="/login/")
 def delete_project(request, project_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    
     project = get_object_or_404(Project, pk=project_id)
 
     if request.method == "POST":
@@ -159,9 +199,14 @@ def show_main(request):
 
 
 def show_experience(request):
+    is_editor = (
+        request.user.is_authenticated 
+        and request.user.groups.filter(name='Editor').exists()
+    )
     context = {
         "name": "Rajendra Akbar",
         "experience_list": Experience.objects.all(),
+        "is_editor": is_editor,
     }
     return render(request, "experience.html", context)
 
