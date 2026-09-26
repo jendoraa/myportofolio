@@ -656,7 +656,7 @@ h1, .brand {
     border: 0;
     border-radius: var(--radius);
     padding: 0.65rem 1rem;
-    background: var(--accent);
+    background: var(--primary);
     color: white;
     cursor: pointer;
     font: inherit;
@@ -665,7 +665,7 @@ h1, .brand {
 }
 
 .button-secondary {
-    background: var(--ink);
+    background: var(--secondary);
 }
 
 .experience {
@@ -791,6 +791,18 @@ h1, .brand {
         text-decoration: underline;
     }
 
+.project-card-actions {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.project-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
 .star-form {
     display: inline;
 }
@@ -799,11 +811,11 @@ h1, .brand {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    background: var(--ink);
+    background: var(--secondary);
 }
 
 .button-star.is-starred {
-    background: var(--accent);
+    background: var(--primary);
 }
 
 .star-count {
