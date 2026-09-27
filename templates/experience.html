@@ -6,55 +6,64 @@
 
     <div class="experience-header">
         <h1>Experience</h1>
+
         {% if user.is_superuser %}
-        <a href="{% url 'main:create_experience' %}">
-            Add Experience
-        </a>
+            <a href="{% url 'main:create_experience' %}">
+                Add Experience
+            </a>
         {% endif %}
     </div>
 
     <div id="experience-container">
-        <!-- Data akan dimasukkan dari JSON -->
+
+        {% for experience in experience_list %}
+            <div class="experience-card">
+
+                {% if experience.thumbnail %}
+                    <img
+                        src="{{ experience.thumbnail }}"
+                        alt="{{ experience.title }}"
+                    >
+                {% endif %}
+
+                <h1>{{ experience.title }}</h1>
+
+                <h3>{{ experience.position }}</h3>
+
+                <p>
+                    {{ experience.description }}
+                </p>
+
+                <p>
+                    {{ experience.started_at|date:"M Y" }}
+                    -
+                    {% if experience.ended_at %}
+                        {{ experience.ended_at|date:"M Y" }}
+                    {% else %}
+                        Present
+                    {% endif %}
+                </p>
+
+                {% if user.is_superuser or is_editor %}
+                    <a href="{% url 'main:update_experience' experience.pk %}">
+                        Edit
+                    </a>
+                {% endif %}
+
+                {% if user.is_superuser %}
+                    <a href="{% url 'main:delete_experience' experience.pk %}">
+                        Delete
+                    </a>
+                {% endif %}
+
+            </div>
+
+        {% empty %}
+            <p>No experience yet.</p>
+        {% endfor %}
+
     </div>
 
 </section>
-
-<script>
-    fetch("{% url 'main:experience_json' %}")
-        .then(response => response.json())
-        .then(data => {
-            const container = document.getElementById(
-                "experience-container"
-            );
-
-            data.forEach(item => {
-                container.innerHTML += `
-                    <div class="experience-card">
-                        ${item.fields.thumbnail ? `<img src="${item.fields.thumbnail}" alt="${item.fields.title}" />` : ''}
-                        <h1>${item.fields.title}</h1>
-                        <h3>${item.fields.position}</h3>
-
-                        <p>
-                            ${item.fields.description}
-                        </p>
-
-                        <p>
-                            ${item.fields.start_year}
-                        </p>
-                        {% if user.is_superuser or is_editor %}
-                        <a href="/experience/${item.pk}/update/">
-                            Edit
-                        </a>
-                        {% endif %}
-                        {% if user.is_superuser %}
-                        <a href="/experience/${item.pk}/delete/">
-                            Delete
-                        </a>
-                        {% endif %}
-                    </div>
-                `;
-            });
-        });
-</script>
 
 {% endblock %}

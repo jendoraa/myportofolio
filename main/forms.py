@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, Textarea, URLInput, DateTimeInput
+from django.forms import ModelForm, TextInput, Textarea, URLInput, DateInput
 
 from main.models import Project, Experience
 
@@ -10,6 +10,7 @@ class ExperienceForm(ModelForm):
             "description",
             "position",
             "thumbnail",
+            "started_at",
             "ended_at",
         ]
 
@@ -18,6 +19,7 @@ class ExperienceForm(ModelForm):
             "description": "Deskripsi Pengalaman",
             "position": "Posisi",
             "thumbnail": "URL Gambar",
+            "started_at": "Tanggal Mulai",
             "ended_at": "Tanggal Selesai",
         }
 
@@ -45,9 +47,14 @@ class ExperienceForm(ModelForm):
                     "placeholder": "https://example.com/image.jpg",
                 }
             ),
-            "ended_at": DateTimeInput(
+            "started_at": DateInput(
                 attrs={
-                    "type": "datetime-local",
+                    "type": "date",
+                }
+            ),
+            "ended_at": DateInput(
+                attrs={
+                    "type": "date",
                 }
             ),
         }
