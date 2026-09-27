@@ -44,7 +44,7 @@
                                     {% if project.project_url %}
                                         <a href="{{ project.project_url }}" class="button">Lihat Project</a>
                                     {% endif %}
-                                    {% include "components/project_star.html" with project=project %}
+                                    {% include "components/project_star_project.html" with project=project %}
                                     {% if user.is_superuser or is_editor %}
                                     <a href="{% url 'main:update_project' project.id %}" class="button">
                                         Edit

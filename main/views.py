@@ -68,11 +68,8 @@ def get_experiences_json(request):
     if title_query:
         experiences = experiences.filter(title__icontains=title_query)
 
-    experiences_json = serializers.serialize("json", experiences)
-    return HttpResponse(
-        experiences_json,
-        content_type="application/json"
-    )
+    experiences_json = serializers.serialize("json", experiences, use_natural_foreign_keys=True)
+    return HttpResponse(experiences_json, content_type="application/json")
 
 def experience(request):
     experiences = Experience.objects.all()
@@ -263,14 +260,14 @@ def toggle_star_project(request, project_id):
 
 @login_required(login_url="/login/")
 def toggle_star_experience(request, experience_id):
-    project = get_object_or_404(Project, pk=experience_id)
+    experience = get_object_or_404(Experience, pk=experience_id)
 
     if request.method == "POST":
         # Kalau akun ini sudah pernah memberi star, batalkan star-nya.
         # Kalau belum, tambahkan star.
-        if request.user in project.starred_by.all():
-            project.starred_by.remove(request.user)
+        if request.user in experience.starred_by.all():
+            experience.starred_by.remove(request.user)
         else:
-            project.starred_by.add(request.user)
+            experience.starred_by.add(request.user)
 
     return redirect("main:show_experience")
