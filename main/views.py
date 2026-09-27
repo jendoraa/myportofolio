@@ -30,12 +30,12 @@ def create_experience(request):
     })
 
 @login_required(login_url="/login/")
-def update_experience(request, id):
+def update_experience(request, experience_id):
     is_editor = request.user.groups.filter(name='Editor').exists()
     if not (request.user.is_superuser or is_editor):
         raise PermissionDenied
     
-    experience = get_object_or_404(Experience, id=id)
+    experience = get_object_or_404(Experience, id=experience_id)
 
     if request.method == "POST":
         form = ExperienceForm(request.POST, instance=experience)
@@ -53,10 +53,10 @@ def update_experience(request, id):
     })
 
 @login_required(login_url="/login/")
-def delete_experience(request, id):
+def delete_experience(request, experience_id):
     if not request.user.is_superuser:
         raise PermissionDenied
-    experience = get_object_or_404(Experience, id=id)
+    experience = get_object_or_404(Experience, id=experience_id)
     experience.delete()
     messages.success(request, "Experience berhasil dihapus!")
     return redirect("main:show_experience")
@@ -248,7 +248,7 @@ def logout_user(request):
     return response
 
 @login_required(login_url="/login/")
-def toggle_star(request, project_id):
+def toggle_star_project(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
 
     if request.method == "POST":
@@ -260,3 +260,17 @@ def toggle_star(request, project_id):
             project.starred_by.add(request.user)
 
     return redirect("main:show_projects")
+
+@login_required(login_url="/login/")
+def toggle_star_experience(request, experience_id):
+    project = get_object_or_404(Project, pk=experience_id)
+
+    if request.method == "POST":
+        # Kalau akun ini sudah pernah memberi star, batalkan star-nya.
+        # Kalau belum, tambahkan star.
+        if request.user in project.starred_by.all():
+            project.starred_by.remove(request.user)
+        else:
+            project.starred_by.add(request.user)
+
+    return redirect("main:show_experience")
