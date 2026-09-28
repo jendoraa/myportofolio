@@ -87,6 +87,7 @@ AI yang digunakan dalam pengerjaan proyek ini adalah ChatGPT (OpenAI). ChatGPT d
 ## 2. Bagian yang Dibantu oleh AI
 AI digunakan pada beberapa tahap pengerjaan website, antara lain:
 
+## Tugas 1
 ### a. CSS dan Layout
 ChatGPT digunakan untuk membantu memahami dan mengevaluasi penggunaan CSS, terutama terkait:
 - positioning,
@@ -124,13 +125,18 @@ ChatGPT digunakan untuk membantu menganalisis masalah pada kode HTML dan CSS. Ko
 - penyesuaian border pada gambar,
 - serta permasalahan layout pada responsive design.
 
+## Tugas 3
 ### e. Membantu membuat dan memperbaiki views, models, forms serta template HTMLS
 AI digunakan untuk membantu memahami hubungan antara komponen Django dalam pengembangan website. Pada bagian models, AI membantu dalam menentukan struktur data yang diperlukan untuk menyimpan informasi seperti nama pengalaman, deskripsi, posisi, dan gambar. Pada bagian views, AI membantu membuat logika untuk mengambil data dari database serta menampilkan, menambahkan, mengubah, dan menghapus data. AI juga membantu dalam pembuatan dan perbaikan forms untuk menerima input dari pengguna. Selain itu, AI digunakan untuk membantu memperbaiki template HTML agar dapat menampilkan data dari database secara dinamis menggunakan Django Template Language.
 
 ### f. Membantu dalam implementasi fitur CRUD Experience.
-AI digunakan sebagai bantuan dalam mengimplementasikan fitur CRUD (Create, Read, Update, Delete) pada halaman Experience. Pada tahap Create, AI membantu membuat mekanisme untuk menambahkan data pengalaman baru ke database, termasuk data gambar. Pada tahap Read, AI membantu menampilkan data Experience yang tersimpan di database ke halaman website secara dinamis. Pada tahap Update, AI membantu membuat fungsi untuk mengubah data Experience yang sudah tersimpan. Sedangkan pada tahap Delete, AI membantu membuat mekanisme untuk menghapus data Experience dari database. AI juga digunakan untuk membantu melakukan debugging ketika terdapat kendala dalam proses CRUD, seperti data yang tidak tampil atau gambar yang tidak berhasil tersimpan.
+AI digunakan sebagai bantuan dalam mengimplementasikan fitur CRUD (Create, Read, Update, Delete) pada halaman Experience. Pada tahap Create, AI membantu membuat mekanisme untuk menambahkan data pengalaman baru ke database, termasuk data gambar. Pada tahap Read, AI membantu menampilkan data Experience yang tersimpan di database ke halaman website secara dinamis. Pada tahap Update, AI membantu membuat fungsi untuk mengubah data Experience yang sudah tersimpan. Sedbaangkan pada tahap Delete, AI membantu membuat mekanisme untuk menghapus data Experience dari database. AI juga digunakan untuk membantu melakukan debugging ketika terdapat kendala dalam proses CRUD, seperti data yang tidak tampil atau gambar yang tidak berhasil tersimpan.
 
 AI memberikan kemungkinan penyebab dan solusi, kemudian solusi tersebut diuji kembali pada website.
+
+## Tugas 4
+### g. Pengaturan Hak Akses pada pengguna tanpa login, pengguna biasa, editor, dan superuser
+AI digunakan untuk membantu pengaturan hak akses seperti menggunakan @login_required, cek is_editor serta kalau bukan permintaan ditolak HTTP 403 Forbidden. AI juga digunakan untuk mengatur error saat editor tidak mengedit experience yang seharusnya sesuai ketentukan tugas 4 editor bisa mengedit.
 
 ## 3. Modifikasi terhadap Output AI
 Output yang diberikan oleh AI tidak digunakan secara langsung tanpa modifikasi. Setiap saran atau potongan kode yang diberikan ChatGPT dipelajari terlebih dahulu, kemudian disesuaikan dengan struktur project dan kebutuhan desain website.
@@ -159,3 +165,4 @@ AI juga tidak digunakan sebagai pengganti proses memahami kode. Setiap kode atau
 Percakapan dengan ChatGPT yang digunakan sebagai salah satu referensi dalam proses pengerjaan dapat dilihat melalui: 
 `https://chatgpt.com/share/6a9b9861-0128-83ec-918f-ff826a59564c`(2-7 September 2026)
 `https://chatgpt.com/share/6ab1214d-a604-83ec-b46d-579898215cdc`(16-21 September 2026)
+https://share.gemini.google/IbYuDNtynfOv (26-28 September 2026)
