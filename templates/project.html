@@ -46,7 +46,7 @@
                     <p>Belum ada proyek yang ditambahkan atau ditemukan.</p>
                 </div>
 
-                <div class="experience-grid project-grid">
+                <div id="grid" class="experience-grid project-grid hide">
                     {% for project in project_list %}
                         <article class="experience-card">
                             {% if project.project_image_url %}
@@ -85,9 +85,6 @@
             </div>
         </section>
     </main>
-{% endblock content %}
-
-
 <script>
 // Konfigurasi
 const BASE_PROJECTS_ENDPOINT = "{% url 'main:get_projects_json' %}";
@@ -108,7 +105,7 @@ function displayPageSection({ showLoading = false, showError = false, showEmpty 
     errorState.classList.toggle('hide', !showError);
     emptyState.classList.toggle('hide', !showEmpty);
     gridContainer.classList.toggle('hide', !showGrid);
-    }
+}
 
 // Membuat elemen card project
 function buildProjectCardElement(item) {
@@ -129,7 +126,7 @@ function buildProjectCardElement(item) {
     // Dummy UUID digunakan untuk digantikan oleh ID asli dari data JSON
     const deleteUrl = "{% url 'main:delete_project' '00000000-0000-0000-0000-000000000000' %}"
         .replace('00000000-0000-0000-0000-000000000000', projectId);
-    const starUrl = "{% url 'main:toggle_star' '00000000-0000-0000-0000-000000000000' %}"
+    const starUrl = "{% url 'main:toggle_star_project' '00000000-0000-0000-0000-000000000000' %}"
         .replace('00000000-0000-0000-0000-000000000000', projectId);
 
     const deleteHtml = IS_SUPERUSER 
@@ -219,3 +216,4 @@ searchForm.addEventListener('submit', function(e) {
 // Start application
 fetchProjects(searchInput.value.trim());
 </script>
+{% endblock content %}
