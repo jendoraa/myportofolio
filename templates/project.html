@@ -13,11 +13,12 @@
                     </button>
                     <h1>Projects</h1>
                     {% if user.is_superuser %}
-                        <a href="{% url 'main:create_project' %}"
-                            class="button project-add-button">
+                        <button type="button"
+                                class="button project-add-button"
+                                popovertarget="add-project-modal">
                             <span aria-hidden="true">+</span>
                             Tambah Proyek
-                        </a>
+                        </button>
                     {% endif %}
                 </div>
                 <form id="project-search-form" class="project-search">
@@ -85,6 +86,7 @@
             </div>
         </section>
     </main>
+{% include "components/project_form_modal.html" %}
 <script>
 // Konfigurasi
 const BASE_PROJECTS_ENDPOINT = "{% url 'main:get_projects_json' %}";
@@ -207,11 +209,27 @@ async function fetchProjects(searchQuery = "") {
     }
 }
 
-// Event Handlers untuk Form Search
-searchForm.addEventListener('submit', function(e) {
-    e.preventDefault(); // Mencegah reload halaman
-    fetchProjects(searchInput.value.trim()); // Jalankan pencarian via AJAX
+function searchProjects() {
+    fetchProjects(searchInput.value.trim());
+}
+
+searchInput.addEventListener("input", function() {
+    clearTimeout(searchDebounceTimer);
+
+    searchDebounceTimer = setTimeout(function() {
+        searchProjects();
+    }, SEARCH_DEBOUNCE_DELAY);
 });
+
+searchForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    clearTimeout(searchDebounceTimer);
+    searchProjects();
+});
+
+function closeProjectModal() {
+    document.getElementById("add-project-modal").hidePopover();
+}
 
 // Start application
 fetchProjects(searchInput.value.trim());

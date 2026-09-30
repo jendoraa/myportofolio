@@ -156,6 +156,7 @@ def show_projects(request):
         "name": "Rajendra Akbar",
         "title_query": title_query,
         "is_editor": is_editor,
+        "form": ProjectForm(),
     }
     return render(request, "project.html", context)
 
