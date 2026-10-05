@@ -69,8 +69,28 @@ def get_experiences_json(request):
     if title_query:
         experiences = experiences.filter(title__icontains=title_query)
 
-    experiences_json = serializers.serialize("json", experiences, use_natural_foreign_keys=True)
-    return HttpResponse(experiences_json, content_type="application/json")
+    data = []
+    for experience in experiences:
+        starred_users = experience.starred_by.all()
+        is_starred = request.user in starred_users if request.user.is_authenticated else False
+        starred_by_names = ", ".join([u.username for u in starred_users])
+
+        data.append({
+            "pk": str(experience.id),
+            "fields": {
+                "title": experience.title,
+                "description": experience.description,
+                "position": experience.position,
+                "thumbnail": experience.thumbnail,
+                "started_at": experience.started_at,
+                "ended_at": experience.ended_at,
+                "star_count": starred_users.count(),
+                "is_starred": is_starred,
+                "starred_by_names": starred_by_names,
+            }
+        })
+
+    return JsonResponse(data, safe=False)
 
 def experience(request):
     experiences = Experience.objects.all()
@@ -212,13 +232,14 @@ def show_main(request):
 
 
 def show_experience(request):
+    title_query = request.GET.get("title", "").strip()
     is_editor = (
         request.user.is_authenticated 
         and request.user.groups.filter(name='Editor').exists()
     )
     context = {
         "name": "Rajendra Akbar",
-        "experience_list": Experience.objects.all(),
+        "title_query": title_query,
         "is_editor": is_editor,
     }
     return render(request, "experience.html", context)

@@ -16,6 +16,21 @@
 
     <div id="experience-container">
 
+        <!-- Loading State -->
+        <div id="loading" class="empty-state hide">
+            <p>Memuat experiences...</p>
+        </div>
+
+         <!-- Error State -->
+        <div id="error" class="empty-state hide">
+            <p>Gagal memuat data experiences. Silakan coba lagi.</p>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty" class="empty-state hide">
+            <p>Belum ada experience yang ditambahkan atau ditemukan.</p>
+        </div>
+
         {% for experience in experience_list %}
             <div class="experience-card">
 
@@ -57,13 +72,127 @@
                 {% endif %}
                 {% include "components/experience_star_experience.html" with experience=experience %}
             </div>
-
-        {% empty %}
-            <p>No experience yet.</p>
         {% endfor %}
 
     </div>
 
 </section>
+<script>
+// Konfigurasi
+const BASE_EXPERIENCES_ENDPOINT = "{% url 'main:get_experiences_json' %}";
+const IS_SUPERUSER = "{{ user.is_superuser|yesno:'true,false' }}" === "true";
+let experiencesAbortController;
 
-{% endblock %}
+// Elemen DOM
+const loadingState = document.getElementById('loading');
+const errorState = document.getElementById('error');
+const emptyState = document.getElementById('empty');
+const gridContainer = document.getElementById('experience-container');
+
+// Menyembunyikan/Menampilkan section halaman
+function displayPageSection({ showLoading = false, showError = false, showEmpty = false, showGrid = false }) {
+    loadingState.classList.toggle('hide', !showLoading);
+    errorState.classList.toggle('hide', !showError);
+    emptyState.classList.toggle('hide', !showEmpty);
+    gridContainer.classList.toggle('hide', !showGrid);
+}
+
+// Membuat elemen card
+function buildExperienceCardElement(item) {
+    const experience = item.fields;
+    const experienceId = item.pk;
+
+    const articleElement = document.createElement('article');
+    articleElement.className = 'experience-card';
+
+    const imageHtml = experience.thumbnail
+        ? `<img src="${experience.thumbnail}" alt="Gambar ${experience.title}">`
+        : '';
+
+    // Dummy UUID digunakan untuk digantikan oleh ID asli dari data JSON
+    const deleteUrl = "{% url 'main:delete_experience' '00000000-0000-0000-0000-000000000000' %}"
+        .replace('00000000-0000-0000-0000-000000000000', experienceId);
+    const starUrl = "{% url 'main:toggle_star_experience' '00000000-0000-0000-0000-000000000000' %}"
+        .replace('00000000-0000-0000-0000-000000000000', experienceId);
+
+    const deleteHtml = IS_SUPERUSER 
+        ? `<form method="post" action="${deleteUrl}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="button button-danger" onclick="return confirm('Yakin ingin menghapus Experience ini?');">Hapus</button>
+        </form>`
+        : '';
+
+    const isStarredClass = experience.is_starred ? " is-starred" : "";
+    const starText = experience.is_starred ? "Unstar" : "Star";
+    const starTitle = experience.star_count > 0 
+        ? `Dibintangi oleh ${experience.starred_by_names}` 
+        : "Jadilah yang pertama memberi star";
+
+    // Komponen card
+    const completeCardHtml = `
+        ${imageHtml}
+        <h1>${experience.title}</h1>
+        <h3>${experience.position}</h3>
+        <p>${experience.description}</p>
+        <p>
+            ${experience.started_at}
+            -
+            ${experience.ended_at}
+        </p>
+                    
+        <form method="post" action="${starUrl}" class="star-form">
+            {% csrf_token %}
+            <button type="submit" 
+                    class="button button-star${isStarredClass}"
+                    title="${starTitle}">
+                <span aria-hidden="true">★</span>
+                ${starText}
+                <span class="star-count">${experience.star_count}</span>
+            </button>
+        </form>
+        ${deleteHtml}
+    `;
+
+    articleElement.innerHTML = completeCardHtml;
+    return articleElement;
+}
+
+// Fetch data
+async function fetchExperiences(searchQuery = "") {
+    if (experiencesAbortController) experiencesAbortController.abort();
+    experiencesAbortController = new AbortController();
+
+    try {
+        displayPageSection({ showLoading: true });
+            
+        const url = searchQuery ? `${BASE_EXPERIENCES_ENDPOINT}?title=${encodeURIComponent(searchQuery)}` : BASE_EXPERIENCES_ENDPOINT;
+            
+        const response = await fetch(url, {
+            headers: { 'Accept': 'application/json' },
+            signal: experiencesAbortController.signal,
+        });
+
+        if (!response.ok) throw new Error('Failed to fetch data');
+
+        const experienceData = await response.json();
+
+        if (experienceData.length === 0) {
+            displayPageSection({ showEmpty: true });
+        } else {
+            gridContainer.innerHTML = '';
+            experienceData.forEach(item => {
+                gridContainer.appendChild(buildExperienceCardElement(item));
+            });
+            displayPageSection({ showGrid: true });
+        }
+    } catch (error) {
+        if (error.name === 'AbortError') return;
+        console.error('Error loading experiences:', error);
+        displayPageSection({ showError: true });
+    }
+}
+
+// Start application
+fetchExperiences();
+</script>
+{% endblock content %}
