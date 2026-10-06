@@ -61,6 +61,7 @@ Sedangkan migrate berfungsi mengeksekusi berkas-berkas migrasi yang belum dijala
 
 Contoh perubahan: Menambahkan atribut/field baru, misalnya tech_stack = models.CharField(max_length=255), pada model Project. Kamu harus menjalankan python manage.py makemigrations untuk membuat instruksi pembuatan kolom baru, lalu menjalankan python manage.py migrate agar kolom tersebut benar-benar dibuat pada tabel database.
 
+
 ## Tugas 3
 ### 1. Mengapa menggunakan ModelForm dan mengapa perlu {% csrf_token %}?
 `ModelForm` digunakan karena dapat membuat form berdasarkan struktur Model yang sudah didefinisikan di Django. Dengan `ModelForm`, field pada form dapat disesuaikan secara otomatis dengan field yang terdapat pada model sehingga kode yang perlu ditulis menjadi lebih sedikit dan lebih mudah dikelola. Selain itu, `ModelForm` juga membantu melakukan validasi data sebelum data tersebut disimpan ke database. Jika membuat form HTML secara manual, developer harus menentukan sendiri setiap field dan melakukan proses validasi serta penyimpanan datanya.
@@ -77,6 +78,17 @@ Dibandingkan XML, JSON umumnya membutuhkan lebih sedikit karakter untuk merepres
 Ketika pengguna mengakses URL yang mengarah ke suatu fungsi view, Django menerima request tersebut dan menjalankan view yang sesuai. View kemudian mengambil data portofolio dari database menggunakan model Django, misalnya dengan Model.objects.all(). Data yang diperoleh masih berupa objek atau QuerySet Django sehingga belum dapat langsung dikembalikan dalam format JSON.
 
 Oleh karena itu, dilakukan proses serialization, yaitu mengubah data dari model Django menjadi struktur data yang dapat direpresentasikan dalam format JSON. Setelah proses serialization selesai, hasilnya dapat diubah menjadi string JSON menggunakan json.dumps(). String JSON tersebut kemudian dikembalikan kepada client menggunakan HttpResponse dengan menentukan content_type="application/json".
+
+
+## Tugas 5
+### 1. Debouncing pada Fitur Pencarian AJAX
+Debouncing adalah teknik pemrograman yang digunakan untuk menunda eksekusi suatu fungsi sampai pengguna berhenti melakukan tindakan dalam rentang waktu tertentu. Pada fitur pencarian berbasis AJAX, teknik ini sangat penting karena mencegah browser mengirimkan request ke server pada setiap ketikan tombol keyboard. Tanpa debouncing, kata kunci seperti "laptop" akan memicu enam _request_ AJAX secara beruntun yang berisiko membebani server, membuang bandwidth, serta memicu kondisi _race condition_ di mana respon pencarian yang lama datang belakangan dan menimpa respon terbaru. Dengan menerapkan delay singkat seperti 300 milidetik setelah ketikan terakhir, aplikasi hanya akan mengirim satu request AJAX untuk kata kunci yang sudah utuh, sehingga beban server berkurang dan performa antarmuka pengguna menjadi jauh lebih responsif.
+
+### 2. Fungsi await pada fetch()
+Fungsi `await` digunakan untuk menghentikan sementara eksekusi kode di dalam blok fungsi `async` sampai proses asynchronous dari `fetch()` selesai mengembalikan respon berupa objek _Promise_. Karena `fetch()` membutuhkan waktu untuk berkomunikasi dengan server melalui jaringan, `await` memastikan bahwa data respon sudah benar-benar siap sebelum baris kode berikutnya dieksekusi. Jika kita tidak menggunakan `await`, JavaScript yang bersifat _non-blocking_ akan langsung mengeksekusi baris kode di bawahnya tanpa menunggu proses pengambilan data selesai. Akibatnya, variabel penampung data tidak akan berisi respon dari server melainkan objek _Promise_ bersetatus pending, yang menyebabkan galat seperti `undefined` saat kita mencoba membaca atau menampilkan isi data tersebut ke layar.
+
+### 3. Serangan XSS pada AJAX serta Template Django
+Serangan Cross-Site Scripting (XSS) adalah kejahatan siber di mana peretas menyisipkan kode skrip JavaScript berbahaya ke dalam data aplikasi web agar tereksekusi secara otomatis di browser pengguna lain untuk mencuri token sesi atau merusak tampilan. Data yang ditampilkan melalui AJAX jauh lebih rentan terhadap serangan ini karena pengembang sering kali memasukkan string respon dari server secara langsung ke dalam struktur web menggunakan perintah JavaScript seperti `innerHTML` atau `.html()`, yang secara otomatis akan mengeksekusi semua tag HTML dan skrip di dalamnya. Sebaliknya, mesin template Django memiliki fitur pertahanan bawaan berupa _auto-escaping_ otomatis pada sintaks `{{ variable }}`. Fitur ini secara mandiri mengonversi karakter berbahaya seperti `<` dan `>` menjadi entitas HTML yang aman seperti `&lt;` dan `&gt;`, sehingga browser hanya akan menampilkannya sebagai teks biasa dan gagal mengeksekusinya sebagai skrip berbahaya.
 
 # Pengungkapan Penggunaan AI
 Dalam pengerjaan website portofolio ini, saya menggunakan ChatGPT (OpenAI) sebagai alat bantu dalam proses pembelajaran, perancangan, implementasi, dan evaluasi website. Penggunaan AI dilakukan sebagai pendukung proses pengerjaan, sedangkan keputusan akhir mengenai desain, struktur, kode, dan implementasi website tetap dilakukan dan diverifikasi oleh saya sendiri.
@@ -165,4 +177,5 @@ AI juga tidak digunakan sebagai pengganti proses memahami kode. Setiap kode atau
 Percakapan dengan ChatGPT yang digunakan sebagai salah satu referensi dalam proses pengerjaan dapat dilihat melalui: 
 `https://chatgpt.com/share/6a9b9861-0128-83ec-918f-ff826a59564c`(2-7 September 2026)
 `https://chatgpt.com/share/6ab1214d-a604-83ec-b46d-579898215cdc`(16-21 September 2026)
-https://share.gemini.google/IbYuDNtynfOv (26-28 September 2026)
+`https://share.gemini.google/IbYuDNtynfOv` (26-28 September 2026)
+`https://chatgpt.com/share/6ac49014-d49c-83ec-8eef-e9ee2b24e131` (5 Oktober 2026)
