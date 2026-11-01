@@ -41,6 +41,7 @@ h1, .brand {
     max-width: var(--container-width);
     margin: 0 auto;
     padding-inline: clamp(24px, 4vw, 96px);
+    padding-top: 120px;
     gap: 48px;
 }
 
@@ -522,7 +523,6 @@ h1, .brand {
 
 .site-footer {
     padding: 24px 0;
-    background-color: var(--primary);
     color: var(--secondary);
     font-size: 14px;
     border-top: 1px solid var(--accent);

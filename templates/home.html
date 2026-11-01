@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <main>
+    <section id="home" class="relative flex min-h-svh items-end justify-center overflow-hidden bg-mist md:items-center md:justify-end">
+      <img src="{% static 'img/Maomao.jpeg' %}"
+           alt="Ilustrasi Maomao"
+           fetchpriority="high"
+           class="absolute inset-0 h-full w-full object-cover object-center">
+
+      <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(242,247,243,0)_35%,rgba(242,247,243,0.92)_80%)] md:bg-[linear-gradient(360deg,rgba(255,255,255,0)_80%,rgba(255,255,255,0.2)_100%),linear-gradient(90deg,rgba(242,247,243,0)_60%,rgba(242,247,243,0.3)_66.62%)]"></div>
+
+      <!-- Content -->
+      <div class="relative z-[1] flex w-full max-w-[520px] flex-col items-start gap-4 px-6 pb-14 text-left md:mb-[177px] md:mr-[clamp(24px,6vw,120px)] md:w-[412px] md:max-w-none md:items-end md:p-0">
+        <header class="w-full">
+          <p class="text-[22px] font-medium leading-7 text-teal md:text-[28px] md:leading-[35px]">Hi, I’m</p>
+          <h1 class="text-[36px] font-extrabold leading-[44px] text-deep md:text-[48px] md:leading-[60px]">Rajendra Akbar</h1>
+        </header>
+
+        <p class="w-full text-lg leading-[26px] md:text-2xl md:leading-8">
+          Cepat namun sendiri, untuk apa? Bersama tapi meracuni, untuk apa?
+        </p>
+
+        <ul class="flex items-center gap-2.5">
+          <li class="grid size-[72px] place-items-center">
+            <a href="https://instagram.com/rajendrakbar" target="_blank" rel="noopener" aria-label="Instagram"
+               class="grid size-12 place-items-center rounded-full bg-deep transition hover:-translate-y-[3px] hover:bg-teal">
+              <svg viewBox="0 0 24 24" class="size-[22px] fill-none stroke-white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </li>
+
+          <li class="grid size-[72px] place-items-center">
+            <a href="https://linkedin.com/in/rajendraakbar" target="_blank" rel="noopener" aria-label="LinkedIn"
+               class="grid size-12 place-items-center rounded-full bg-deep transition hover:-translate-y-[3px] hover:bg-teal">
+              <svg viewBox="0 0 24 24" class="size-[22px] fill-none stroke-white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </li>
+
+          <li class="grid size-[72px] place-items-center">
+            <a href="https://x.com/jendoraa" target="_blank" rel="noopener" aria-label="X"
+               class="grid size-12 place-items-center rounded-full bg-deep transition hover:-translate-y-[3px] hover:bg-teal">
+              <svg viewBox="0 0 24 24" class="size-[22px] fill-none stroke-white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l16 16M20 4L4 20"/></svg>
+            </a>
+          </li>
+
+          <li class="grid size-[72px] place-items-center">
+            <a href="https://github.com/jendoraa" target="_blank" rel="noopener" aria-label="GitHub"
+               class="grid size-12 place-items-center rounded-full bg-deep transition hover:-translate-y-[3px] hover:bg-teal">
+              <svg viewBox="0 0 24 24" class="size-[22px] fill-none stroke-white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+{% endblock %}

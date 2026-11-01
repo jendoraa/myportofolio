@@ -14,6 +14,7 @@ from main.views import (
     register,
     show_experience,
     show_main,
+    show_profile,
     show_projects,
     toggle_star_experience,
     toggle_star_project,
@@ -25,6 +26,7 @@ app_name = "main"
 
 urlpatterns = [
     path("", show_main, name="show_main"),
+    path("profile/", show_profile, name="show_profile"),
     path("experience/", show_experience, name="show_experience"),
     path('experience/create/', create_experience, name='create_experience'),
     path('experience/<uuid:experience_id>/update/', update_experience, name='update_experience'),

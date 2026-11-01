@@ -4,30 +4,54 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Portfolio Rajendra Akbar" />
+    
+    <title>Rajendra Akbar — Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
-    {% block meta %} {% endblock meta %}
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;800&display=swap" rel="stylesheet" />
+    <!-- Tailwind via CDN (dev). Untuk produksi, pakai django-tailwind / Tailwind CLI. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: { sans: ["Outfit", "system-ui", "sans-serif"] },
+            colors: {
+                deep: "#17302A",
+                muted: "#4A6B62",
+                teal: "#5FA89A",
+                mist: "#F2F7F3",
+            },
+            },
+        },
+        };
+    </script>
 </head>
-<body>
-  <header class="site-header">
-    <div class="container">
-        <a href="{% url 'main:show_main' %}" class="brand">{{ name }}</a>
-        <nav>
-            <a href="{% url 'main:show_main' %}">Profile</a>
-            <a href="{% url 'main:show_experience' %}">Experience</a>
-            <a href="{% url 'main:show_projects' %}">Projects</a>
-            {% if user.is_authenticated %}
-                <span class="nav-user">{{ user.username }}</span>
-                <a href="{% url 'main:logout' %}">Logout</a>
-            {% else %}
-                <a href="{% url 'main:login' %}">Login</a>
-                <a href="{% url 'main:register' %}">Register</a>
-            {% endif %}
-        </nav>
-    </div>
+
+<body class="bg-white font-sans text-deep">
+  <!-- Navbar -->
+  <header class="pointer-events-none fixed inset-x-0 top-4 z-10 flex justify-center px-4 md:top-10">
+    <nav
+      aria-label="Navigasi utama"
+      class="pointer-events-auto flex w-full max-w-[848px] items-center justify-start gap-2 overflow-x-auto rounded-full border border-[rgba(95,145,168,0.2)] bg-white/80 p-3 shadow-[0_8px_24px_rgba(23,48,42,0.1)] backdrop-blur-[10px] [scrollbar-width:none] md:justify-center md:overflow-visible [&::-webkit-scrollbar]:hidden"
+    >
+      <a href="{% url 'main:show_main' %}" aria-current="page"
+         class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-deep transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Home</a>
+      <a href="{% url 'main:show_profile' %}"
+         class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-muted transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Profile</a>
+      <a href="{% url 'main:show_experience' %}"
+         class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-muted transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Experience</a>
+      <a href="{% url 'main:show_projects' %}"
+         class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-muted transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Projects</a>
+    </nav>
   </header>
+  
   {% block content %} {% endblock content %}
 
   <footer class="site-footer">
@@ -35,6 +59,7 @@
           <p>&copy; 2026 {{ name }}. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
       </div>
   </footer>
+
   {% include 'components/toast.html' %}
 </body>
 </html>

@@ -221,6 +221,9 @@ def delete_project(request, project_id):
     return redirect("main:show_projects")
 
 def show_main(request):
+    return render(request, "home.html", {"name": "Rajendra Akbar"})
+
+def show_profile(request):
     last_login = request.COOKIES.get('last_login', 'Belum ada sesi login / Cookie tidak ditemukan')
     context = {
         "name": "Rajendra Akbar",
