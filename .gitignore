@@ -1,3 +1,6 @@
+#Ruff Cache
+.ruff_cache/
+
 # Django
 *.log
 *.pot

@@ -1,7 +1,9 @@
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, TextInput, Textarea, URLInput, DateInput
+from django.forms import DateInput, ModelForm, Textarea, TextInput, URLInput
 from django.utils.html import strip_tags
-from main.models import Project, Experience
+
+from main.models import Experience, Project
+
 
 class ExperienceForm(ModelForm):
     class Meta:
