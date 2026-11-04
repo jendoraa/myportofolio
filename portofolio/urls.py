@@ -22,3 +22,9 @@ urlpatterns = [
     path("", include("main.urls")),
     path("contacts/", include("contacts.urls")),
 ]
+
+# Append after your existing urlpatterns definition.    
+urlpatterns += [
+    path("api/v1/", include("main.api_urls")),
+    path("api-auth/", include("rest_framework.urls")),
+]

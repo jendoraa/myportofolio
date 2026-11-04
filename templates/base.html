@@ -41,14 +41,19 @@
       aria-label="Navigasi utama"
       class="pointer-events-auto flex w-full max-w-[848px] items-center justify-start gap-2 overflow-x-auto rounded-full border border-[rgba(95,145,168,0.2)] bg-white/80 p-3 shadow-[0_8px_24px_rgba(23,48,42,0.1)] backdrop-blur-[10px] [scrollbar-width:none] md:justify-center md:overflow-visible [&::-webkit-scrollbar]:hidden"
     >
-      <a href="{% url 'main:show_main' %}" aria-current="page"
-         class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-deep transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Home</a>
-      <a href="{% url 'main:show_profile' %}"
-         class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-muted transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Profile</a>
-      <a href="{% url 'main:show_experience' %}"
-         class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-muted transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Experience</a>
-      <a href="{% url 'main:show_projects' %}"
-         class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-muted transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Projects</a>
+      <a href="{% url 'main:show_main' %}" aria-current="page" class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-deep transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Home</a>
+      <a href="{% url 'main:show_profile' %}" class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-muted transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Profile</a>
+      <a href="{% url 'main:show_experience' %}" class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-muted transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Experience</a>
+      <a href="{% url 'main:show_projects' %}" class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-muted transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Projects</a>
+      
+      <!-- bagian login - register -->
+      {% if user.is_authenticated %}
+      <a href="{% url 'main:logout' %}" class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-deep transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Logout</a>
+      <span class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-deep transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">{{ user.username }}</span>
+      {% else %}
+      <a href="{% url 'main:login' %}" class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-deep transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Login</a>
+      <a href="{% url 'main:register' %}" class="whitespace-nowrap rounded-full px-[18px] py-3 text-base text-deep transition hover:bg-teal/15 hover:text-deep md:px-8 md:py-4 md:text-xl">Register</a>
+      {% endif %}
     </nav>
   </header>
   

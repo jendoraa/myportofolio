@@ -12,7 +12,64 @@ from django.views.decorators.http import require_POST
 
 from main.forms import ExperienceForm, ProjectForm
 from main.models import Experience, Project
+from main.permissions import IsPortfolioOwnerOrEditorOrReadOnly
 
+from rest_framework.decorators import api_view, permission_classes
+
+
+def show_main(request):
+    return render(request, "home.html", {"name": "Rajendra Akbar"})
+
+def show_profile(request):
+    last_login = request.COOKIES.get('last_login', 'Belum ada sesi login / Cookie tidak ditemukan')
+    context = {
+        "name": "Rajendra Akbar",
+        "npm": "2506596874",
+        "study_program": "S1 Ilmu Komputer",
+        "bio": (
+            "Mahasiswa Ilmu Komputer Universitas Indonesia yang tertarik pada pengembangan perangkat keras dan pendidikan."
+        ),
+        "last_login": last_login,
+    }
+    return render(request, "index.html", context)
+
+# Experience
+def show_experience(request):
+    title_query = request.GET.get("title", "").strip()
+    is_editor = (
+        request.user.is_authenticated 
+        and request.user.groups.filter(name='Editor').exists()
+    )
+    context = {
+        "name": "Rajendra Akbar",
+        "title_query": title_query,
+        "is_editor": is_editor,
+        "form":ExperienceForm(),
+    }
+    return render(request, "experience.html", context)
+
+def experience(request):
+    experiences = Experience.objects.all()
+
+    experiences_json = serializers.serialize(
+        "json",
+        experiences
+    )
+
+    experience_list = list(
+        serializers.deserialize(
+            "json",
+            experiences_json
+        )
+    )
+
+    return render(
+        request,
+        "experience.html",
+        {
+            "experience_list": experience_list
+        }
+    )
 
 @login_required(login_url="/login/")
 def create_experience(request):
@@ -95,29 +152,26 @@ def get_experiences_json(request):
 
     return JsonResponse(data, safe=False)
 
-def experience(request):
-    experiences = Experience.objects.all()
 
-    experiences_json = serializers.serialize(
-        "json",
-        experiences
+# Projects
+def show_projects(request):
+    is_editor = (
+        request.user.is_authenticated 
+        and request.user.groups.filter(name='Editor').exists()
     )
 
-    experience_list = list(
-        serializers.deserialize(
-            "json",
-            experiences_json
-        )
-    )
+    title_query = request.GET.get("title", "").strip()
 
-    return render(
-        request,
-        "experience.html",
-        {
-            "experience_list": experience_list
-        }
-    )
+    context = {
+        "name": "Rajendra Akbar",
+        "title_query": title_query,
+        "is_editor": is_editor,
+        "form": ProjectForm(),
+    }
+    return render(request, "project.html", context)
 
+@api_view(["GET"])
+@permission_classes([IsPortfolioOwnerOrEditorOrReadOnly])
 def get_projects_json(request):
     title_query = request.GET.get("title", "").strip()
     projects = Project.objects.prefetch_related('starred_by').all()
@@ -148,8 +202,6 @@ def get_projects_json(request):
 
     return JsonResponse(data, safe=False)
 
-
-
 @login_required(login_url="/login/")
 def create_project(request):
     if not request.user.is_superuser:
@@ -167,22 +219,6 @@ def create_project(request):
         "form": form,
     }
     return render(request, "projects_form.html", context)
-
-def show_projects(request):
-    is_editor = (
-        request.user.is_authenticated 
-        and request.user.groups.filter(name='Editor').exists()
-    )
-
-    title_query = request.GET.get("title", "").strip()
-
-    context = {
-        "name": "Rajendra Akbar",
-        "title_query": title_query,
-        "is_editor": is_editor,
-        "form": ProjectForm(),
-    }
-    return render(request, "project.html", context)
 
 @login_required(login_url="/login/")
 def update_project(request, project_id):
@@ -219,38 +255,6 @@ def delete_project(request, project_id):
         return redirect("main:show_projects")
 
     return redirect("main:show_projects")
-
-def show_main(request):
-    return render(request, "home.html", {"name": "Rajendra Akbar"})
-
-def show_profile(request):
-    last_login = request.COOKIES.get('last_login', 'Belum ada sesi login / Cookie tidak ditemukan')
-    context = {
-        "name": "Rajendra Akbar",
-        "npm": "2506596874",
-        "study_program": "S1 Ilmu Komputer",
-        "bio": (
-            "Mahasiswa Ilmu Komputer Universitas Indonesia yang tertarik pada pengembangan perangkat keras dan pendidikan."
-        ),
-        "last_login": last_login,
-    }
-    return render(request, "index.html", context)
-
-
-def show_experience(request):
-    title_query = request.GET.get("title", "").strip()
-    is_editor = (
-        request.user.is_authenticated 
-        and request.user.groups.filter(name='Editor').exists()
-    )
-    context = {
-        "name": "Rajendra Akbar",
-        "title_query": title_query,
-        "is_editor": is_editor,
-        "form":ExperienceForm(),
-    }
-    return render(request, "experience.html", context)
-
 
 def register(request):
     form = UserCreationForm(request.POST or None)
