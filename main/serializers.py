@@ -51,7 +51,7 @@ class ExperienceSerializer(serializers.ModelSerializer):
         model = Experience
         fields = [
             "id", "title", "description", "position", "thumbnail",
-            "started_at", "ende_at",
+            "started_at", "ended_at",
             "star_count", "is_starred", "starred_by_names",
         ]
         read_only_fields = ["id"]
