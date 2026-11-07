@@ -254,8 +254,8 @@ async function addExperience(event) {
         if (response.ok) {
             experienceForm.reset();
             closeExperienceModal();
-            showToast('Berhasil', 'Proyek baru berhasil ditambahkan!', 'success');
-            fetchProjects(searchInput.value.trim());
+            showToast('Berhasil', 'Experience baru berhasil ditambahkan!', 'success');
+            fetchExperiences(searchInput.value.trim());
         } else {
             const errorMessages = result.errors
                 ? Object.values(result.errors).flat().map(error => error.message)
