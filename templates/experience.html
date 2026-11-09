@@ -271,7 +271,7 @@ async function addExperience(event) {
         await fetchExperiences();
     } catch (error) {
         console.error('Error adding experience:', error);
-        showToast('Gagal menambahkan experience', 'Tidak dapat terhubung ke server. Silakan coba lagi.', 'error');
+        showToast('Gagal menambahkan experience', error.message, 'error');
     } finally {
         submitButton.disabled = false;
     }
