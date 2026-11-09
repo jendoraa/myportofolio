@@ -90,6 +90,19 @@ Fungsi `await` digunakan untuk menghentikan sementara eksekusi kode di dalam blo
 ### 3. Serangan XSS pada AJAX serta Template Django
 Serangan Cross-Site Scripting (XSS) adalah kejahatan siber di mana peretas menyisipkan kode skrip JavaScript berbahaya ke dalam data aplikasi web agar tereksekusi secara otomatis di browser pengguna lain untuk mencuri token sesi atau merusak tampilan. Data yang ditampilkan melalui AJAX jauh lebih rentan terhadap serangan ini karena pengembang sering kali memasukkan string respon dari server secara langsung ke dalam struktur web menggunakan perintah JavaScript seperti `innerHTML` atau `.html()`, yang secara otomatis akan mengeksekusi semua tag HTML dan skrip di dalamnya. Sebaliknya, mesin template Django memiliki fitur pertahanan bawaan berupa _auto-escaping_ otomatis pada sintaks `{{ variable }}`. Fitur ini secara mandiri mengonversi karakter berbahaya seperti `<` dan `>` menjadi entitas HTML yang aman seperti `&lt;` dan `&gt;`, sehingga browser hanya akan menampilkannya sebagai teks biasa dan gagal mengeksekusinya sebagai skrip berbahaya.
 
+## Tugas 6
+### 1. REST, syarat RESTful, serta PUT vs PATCH. 
+REST (_Representational State Transfer_) adalah gaya arsitektur API di mana setiap data dipandang sebagai _resource_ yang punya URL sendiri (misalnya `/api/v1/experience/<id>/`) dan dimanipulasi lewat metode HTTP standar: GET, POST, PUT/PATCH, dan DELETE. Mengembalikan JSON saja belum cukup disebut RESTful karena REST punya batasan lain: URL berorientasi resource, metode HTTP dipakai sesuai maknanya, status code mencerminkan hasil (201, 204, 400, 403, 404), server bersifat _stateless_, dan antarmukanya seragam. Perbedaan PUT dan PATCH: PUT mengganti seluruh representasi resource sehingga semua field wajib dikirim (jika ada field wajib yang hilang, DRF mengembalikan 400), sedangkan PATCH hanya mengubah field yang dikirim (`partial=True`). Pada proyek ini PUT cocok dipakai ketika form edit mengirim seluruh isi form, sedangkan PATCH cocok ketika Editor hanya ingin mengganti judul atau tanggal selesai tanpa menyentuh field lain.
+
+### 2. Peran serializer di DRF.
+Serializer menjembatani objek model dan data JSON dalam dua arah: _serialization_ (model menjadi JSON untuk respons) dan _deserialization_ (JSON dari request menjadi data tervalidasi yang bisa disimpan ke model). Selain itu serializer menjadi tempat validasi (`validate_<field>`, `validate()`), membersihkan input dengan `strip_tags`, menandai field `read_only`, serta menghitung field turunan seperti `star_count` dan `is_starred`. Keuntungannya: aturan validasi dan format data ada di satu tempat sehingga tidak perlu diulang di setiap view; daftar field eksplisit mencegah data sensitif atau field yang tidak diinginkan ikut bocor; field `read_only` mencegah klien memalsukan `star_count`; pesan error 400 terstruktur per field; dan view menjadi lebih pendek serta lebih mudah dites.
+
+### 3. Autentikasi vs otorisasi, dan mengapa permission harus di server.
+Autentikasi menjawab "siapa kamu?", yaitu mengenali pengguna dari kredensial. Di proyek ini dilakukan oleh `SessionAuthentication` yang membaca cookie sesi dan mengisi `request.user`. Otorisasi menjawab "apa yang boleh kamu lakukan?" dan dijalankan oleh permission class, yaitu `IsPortfolioOwnerOrEditorOrReadOnly` (pengunjung dan pengguna biasa hanya membaca, Editor boleh PUT/PATCH, pemilik boleh semuanya) serta `IsAuthenticated` untuk endpoint star. Menyembunyikan tombol di template hanya mengatur tampilan, bukan keamanan. Siapa pun bisa mengirim request langsung lewat `curl`, Postman, Browsable API, atau konsol browser tanpa melewati tombol itu. Karena itu pemeriksaan wajib dilakukan di server pada setiap request.
+
+### 4. CSRF pada SessionAuthentication dan keterbatasan `force_authenticate`
+Dengan `SessionAuthentication`, browser otomatis menyertakan cookie sesi pada setiap request ke domain kita, termasuk request yang dipicu halaman jahat dari situs lain. Tanpa pengaman tambahan, situs jahat bisa membuat pengguna yang sedang login mengirim POST, PATCH, atau DELETE tanpa sadar. Token CSRF (cookie `csrftoken` yang disalin ke header `X-CSRFToken` oleh `getCookie()`) membuktikan bahwa request berasal dari halaman kita sendiri, karena situs lain tidak dapat membaca cookie tersebut. Maka semua request yang mengubah data tetap wajib membawa token. `force_authenticate` di test hanya menyuntikkan `request.user` dan melewati autentikasi sesi, termasuk pemeriksaan CSRF, jadi test yang memakainya tetap lulus walaupun perlindungan CSRF rusak atau dimatikan. Untuk membuktikan perlindungan itu aktif, `test_session_write_without_csrf_is_rejected` memakai `APIClient(enforce_csrf_checks=True)` dan `.login()`, lalu memastikan POST tanpa token ditolak dengan 403 dan database tidak berubah.
+
 # Pengungkapan Penggunaan AI
 Dalam pengerjaan website portofolio ini, saya menggunakan ChatGPT (OpenAI) sebagai alat bantu dalam proses pembelajaran, perancangan, implementasi, dan evaluasi website. Penggunaan AI dilakukan sebagai pendukung proses pengerjaan, sedangkan keputusan akhir mengenai desain, struktur, kode, dan implementasi website tetap dilakukan dan diverifikasi oleh saya sendiri.
 
@@ -150,6 +163,10 @@ AI memberikan kemungkinan penyebab dan solusi, kemudian solusi tersebut diuji ke
 ### g. Pengaturan Hak Akses pada pengguna tanpa login, pengguna biasa, editor, dan superuser
 AI digunakan untuk membantu pengaturan hak akses seperti menggunakan @login_required, cek is_editor serta kalau bukan permintaan ditolak HTTP 403 Forbidden. AI juga digunakan untuk mengatur error saat editor tidak mengedit experience yang seharusnya sesuai ketentukan tugas 4 editor bisa mengedit.
 
+## Tugas 6
+### refaktor dari fetch biasa menjadi menggunakan API dari RESTful
+AI digunakan untuk membantu menemukan pola penggunaan API untuk melakukan fetch. Fetch biasa sebelumnya hanya menggunakan JSON. Sedangkan sekarang menggunakan API yang mana bukan tidak perlu lewat JSON lagi tapi ada resource yang bisa langsung.
+
 ## 3. Modifikasi terhadap Output AI
 Output yang diberikan oleh AI tidak digunakan secara langsung tanpa modifikasi. Setiap saran atau potongan kode yang diberikan ChatGPT dipelajari terlebih dahulu, kemudian disesuaikan dengan struktur project dan kebutuhan desain website.
 Modifikasi yang dilakukan meliputi:
@@ -179,3 +196,4 @@ Percakapan dengan ChatGPT yang digunakan sebagai salah satu referensi dalam pros
 `https://chatgpt.com/share/6ab1214d-a604-83ec-b46d-579898215cdc`(16-21 September 2026)
 `https://share.gemini.google/IbYuDNtynfOv` (26-28 September 2026)
 `https://chatgpt.com/share/6ac49014-d49c-83ec-8eef-e9ee2b24e131` (5 Oktober 2026)
+`https://claude.ai/share/367cc7f8-05ea-488e-b603-354fb43cea0c` (7-9 November 2026)
