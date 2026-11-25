@@ -12,3 +12,4 @@ ruff
 sqlparse==0.6.0
 urllib3==2.7.0
 whitenoise==6.12.0
+django-cors-headers
